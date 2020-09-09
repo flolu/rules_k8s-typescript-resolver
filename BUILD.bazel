@@ -11,7 +11,7 @@ ts_library(
 nodejs_binary(
     name = "resolver",
     data = [":resolver_lib"],
-    entry_point = ".resolver.ts",
+    entry_point = "resolver.ts",
 )
 
 k8s_object(
