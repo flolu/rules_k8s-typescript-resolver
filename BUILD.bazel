@@ -1,0 +1,22 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_library")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+
+ts_library(
+    name = "resolver_lib",
+    srcs = ["resolver.ts"],
+    deps = ["@npm//@types/node"],
+)
+
+nodejs_binary(
+    name = "resolver",
+    data = [":resolver_lib"],
+    entry_point = ".resolver.ts",
+)
+
+k8s_object(
+    name = "example",
+    kind = "deployment",
+    resolver = ":resolver",
+    template = "template.yaml",
+)
